@@ -1,0 +1,36 @@
+[language-server.markdown-oxide]
+command = "markdown-oxide"
+args = ["lsp"]
+
+[language-server.scls]
+command = "simple-completion-language-server"
+
+[language-server.ltex]
+command = "ltex-ls"
+[language-server.ltex.config.ltex]
+language = "auto"
+
+[language-server.scls.environment]
+RUST_LOG = "debug"
+LOG_FILE = "/tmp/scls.log"
+
+[[language]]
+name = "markdown"
+scope = "source.md"
+file-types = ["md", "markdown", "txt"]
+roots = []
+comment-token = "<!--"
+language-servers = [ "markdown-oxide", "ltex", "scls" ]
+auto-format = true
+
+
+[[language]]
+name = "go"
+scope = "source.go"
+file-types = ["go"]
+comment-token = "//"
+roots = ["go.mod", ".git"]
+auto-format = true
+language-servers = [ "gopls", "scls" ]
+soft-wrap = { enable = true, wrap-indicator = "↪" }
+
