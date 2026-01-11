@@ -44,26 +44,37 @@ select = "underline"
 display-inlay-hints = false
 auto-signature-help = false
 
+[keys.select]
+V = ["collapse_selection", "normal_mode"]
+
 [keys.normal]
 K = "hover"
+V = "@Xv"
 # move one line up/down
 "up" = "@XdkP"
 "down" = "@Xdp"
-C-s = [":w",":sh ~/.wakatime/wakatime-cli  --entity %{buffer_name} --plugin Helix-go --timeout 300  --write"]
-
-';' ={ w = [":w",":sh ~/.wakatime/wakatime-cli  --timeout 300 --entity %{buffer_name} --plugin Helix-go  --write"]}
-
-
-# use ' as a select register
+"tab" = ":buffer-next"
+"S-tab" = ":buffer-previous"
+# C-s = [":w",":sh ~/.wakatime/wakatime-cli  --entity %{buffer_name} --plugin Helix-go --timeout 300  --write"]
+# ';' ={ w = [":w",":sh ~/.wakatime/wakatime-cli  --timeout 300 --entity %{buffer_name} --plugin Helix-go  --write"]}
+esc = ["collapse_selection", "keep_primary_selection"]
 "'" = "select_register"
-"[" = {"[" = "goto_prev_paragraph"}
-"]" = {"]" = "goto_next_paragraph"}
+"{" = "goto_prev_paragraph"
+"}" = "goto_next_paragraph"
+
+# random
+[keys.normal.space]
+n = "add_newline_below"
+N = "add_newline_above"
+space = "file_picker_in_current_buffer_directory"
+
 
 [keys.normal.space.f]
 f = "file_picker"
 b = "file_picker_in_current_buffer_directory"
 
 p = ":open ~/Projects"
+h = ":open ~/"
 c = ":open ~/.config"
 l = ":open ~/Documents/my_devops_journey/Languages"
 m = ":open ~/Documents/MindGarden"
@@ -78,7 +89,7 @@ p = [
   ':insert-output yazi ~/Projects --chooser-file=/tmp/unique-file',
   ':insert-output echo "\x1b[?1049h\x1b[?2004h" > /dev/tty',
   ':open %sh{cat /tmp/unique-file}',
-  ':sh ~/.wakatime/wakatime-cli  --timeout 300 --entity %{buffer_name} --plugin Helix-go',
+  # ':sh ~/.wakatime/wakatime-cli  --timeout 300 --entity %{buffer_name} --plugin Helix-go',
   ':redraw',
 ]
 
@@ -87,7 +98,7 @@ c = [
   ':insert-output yazi ~/.config --chooser-file=/tmp/unique-file',
   ':insert-output echo "\x1b[?1049h\x1b[?2004h" > /dev/tty',
   ':open %sh{cat /tmp/unique-file}',
-  ':sh ~/.wakatime/wakatime-cli  --timeout 300 --entity %{buffer_name} --plugin Helix-go',
+  # ':sh ~/.wakatime/wakatime-cli  --timeout 300 --entity %{buffer_name} --plugin Helix-go',
   ':redraw',
 ]
 
@@ -96,7 +107,7 @@ l = [
   ':insert-output yazi ~/Documents/my_devops_journey/Languages --chooser-file=/tmp/unique-file',
   ':insert-output echo "\x1b[?1049h\x1b[?2004h" > /dev/tty',
   ':open %sh{cat /tmp/unique-file}',
-  ':sh ~/.wakatime/wakatime-cli  --timeout 300 --entity %{buffer_name} --plugin Helix-go',
+  # ':sh ~/.wakatime/wakatime-cli  --timeout 300 --entity %{buffer_name} --plugin Helix-go',
   ':redraw',
 ]
 
@@ -105,7 +116,7 @@ m = [
   ':insert-output yazi ~/Documents/MindGarden --chooser-file=/tmp/unique-file',
   ':insert-output echo "\x1b[?1049h\x1b[?2004h" > /dev/tty',
   ':open %sh{cat /tmp/unique-file}',
-  ':sh ~/.wakatime/wakatime-cli  --timeout 300 --entity %{buffer_name} --plugin Helix-go',
+  # ':sh ~/.wakatime/wakatime-cli  --timeout 300 --entity %{buffer_name} --plugin Helix-go',
   ':redraw',
 ]
 
@@ -132,7 +143,7 @@ e = [
   ':insert-output yazi %{buffer_name} --chooser-file=/tmp/unique-file',
   ':insert-output echo "\x1b[?1049h\x1b[?2004h" > /dev/tty',
   ':open %sh{cat /tmp/unique-file}',
-  ':sh ~/.wakatime/wakatime-cli  --timeout 300 --entity %{buffer_name} --plugin Helix-go',
+  # ':sh ~/.wakatime/wakatime-cli  --timeout 300 --entity %{buffer_name} --plugin Helix-go',
   ':redraw',
 ]
 
@@ -148,9 +159,12 @@ e = ":toggle end-of-line-diagnostics error"
 # formatting
 [keys.normal.space.l]
 f = ":format"
-j = ["select_all", ":pipe jq"]
-r = [":reload", ":sh ~/.wakatime/wakatime-cli  --entity %{buffer_name} --plugin Helix-go --timeout 300 --write"]
-c = [":config-reload",":sh ~/.wakatime/wakatime-cli  --entity %{buffer_name} --plugin Helix-go --timeout 300  --write" ]
+r = [":reload",
+# ":sh ~/.wakatime/wakatime-cli  --entity %{buffer_name} --plugin Helix-go --timeout 300 --write"
+]
+c = [":config-reload",
+# ":sh ~/.wakatime/wakatime-cli  --entity %{buffer_name} --plugin Helix-go --timeout 300  --write"
+]
 
 [keys.normal.g]
 I = "goto_implementation"
@@ -160,9 +174,10 @@ c = { c = "toggle_comments"}
 
 # custom go to inside
 [keys.normal.g.i]
-q = "@ghf\"lmim" # quotes
-b = "@ghf]hmi[" # brackets
-p = "@ghf)hmi(" # parentheses
+q = "@ghf\"lmim" # Quotes
+b = "@ghf]hmi[" # Brackets
+p = "@ghf)hmi(" # Parentheses
+c = "@ghf}hmi{" # Curly brackets
 
 
 
@@ -177,16 +192,20 @@ p = "@glF(lmim" # parentheses
 # buffer
 [keys.normal.space.b]
 p = "buffer_picker"
-n = [":buffer-next",":sh ~/.wakatime/wakatime-cli  --timeout 300 --entity %{buffer_name} --plugin Helix-go"]
-N = [":buffer-previous", ":sh ~/.wakatime/wakatime-cli  --timeout 300  --entity %{buffer_name} --plugin Helix-go"]
+# n = [":buffer-next",":sh ~/.wakatime/wakatime-cli  --timeout 300 --entity %{buffer_name} --plugin Helix-go"]
+# N = [":buffer-previous", ":sh ~/.wakatime/wakatime-cli  --timeout 300  --entity %{buffer_name} --plugin Helix-go"]
 o = ":buffer-close-others!"
 q = ":buffer-close!"
 a = ":new"
 "tab" = ":new"
 
 [keys.normal.space.w]
-l = [":buffer-next",":sh ~/.wakatime/wakatime-cli  --timeout 300 --entity %{buffer_name} --plugin Helix-go"]
-h = [":buffer-previous", ":sh ~/.wakatime/wakatime-cli  --timeout 300  --entity %{buffer_name} --plugin Helix-go"]
+l = [":buffer-next",
+# ":sh ~/.wakatime/wakatime-cli  --timeout 300 --entity %{buffer_name} --plugin Helix-go"
+]
+h = [":buffer-previous",
+ # ":sh ~/.wakatime/wakatime-cli  --timeout 300  --entity %{buffer_name} --plugin Helix-go"
+]
 n = ":new"
 q = ":buffer-close!"
 
@@ -194,23 +213,19 @@ q = ":buffer-close!"
 [keys.normal.space.i]
 r = "@oif err != nil {<ret>return err<esc>b" # error handling in Go
 
-# random
-[keys.normal.space]
-n = "add_newline_below"
-N = "add_newline_above"
-space = "file_picker_in_current_buffer_directory"
-
 # execute
 [keys.normal.space.x]
 x = ":pipe sh"
 r = [":pipe renderStdin", "collapse_selection"]
 a = ["select_all", ":pipe renderStdin", "collapse_selection"]
 
+
 # template picker
 t = [
   ':sh rm -f /tmp/selected-template',
   ':insert-output yazi ~/Documents/MindGarden/8-templates --chooser-file=/tmp/selected-template',
   ':insert-output sh -c "if [ -f /tmp/selected-template ]; then cat \"$(cat /tmp/selected-template 2>/dev/null)\" | renderStdin; fi"',
+  # ':sh ~/.wakatime/wakatime-cli  --entity %{buffer_name} --plugin Helix-go --timeout 300 ',
   ':redraw',
 ]
 

@@ -34,3 +34,13 @@ auto-format = true
 language-servers = [ "gopls", "scls" ]
 soft-wrap = { enable = true, wrap-indicator = "↪" }
 
+[[language]]
+name = "json"
+language-id =  "json"
+scope =  "source.json"
+file-types = ["json", "txt"]
+formatter = {command = "jq"}
+
+[[language]]
+name = "log"
+formatter = {command = "jq"}
